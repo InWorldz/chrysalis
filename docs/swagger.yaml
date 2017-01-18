@@ -1,0 +1,31 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Chrysalis Transformation API
+  description: >
+    REST API provided by the Chrysalis Transformation Gateway
+host: chrysalis.localhost
+schemes:
+  - http
+  - https
+paths:
+  /texture/{uuid}:
+    get:
+      tags:
+      - "Texture"
+      summary: "Retrieves the given texture in the best available format"
+      operationId: "getTexture"
+      parameters:
+      - name: "uuid"
+        in: "path"
+        description: "The UUID of the texture to retrieve"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: file
+        default:
+          description: "Error response"
+      x-swagger-router-controller: "Texture"
