@@ -29,3 +29,26 @@ paths:
         default:
           description: "Error response"
       x-swagger-router-controller: "Texture"
+
+  /geometry/h2b:
+      post:
+        tags:
+        - "Geometry"
+        summary: "Converts the POSTed binary primitive object to a babylon flatbuffer"
+        operationId: "convertHalcyonGeomToBabylon"
+        parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          "schema": {
+            "type": "string",
+            "format": "byte"
+          }
+        responses:
+          200:
+            description: "Successful response"
+            schema:
+              type: file
+          default:
+            description: "Error response"
+        x-swagger-router-controller: "Geometry"
