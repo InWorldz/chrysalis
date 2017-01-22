@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace chrysalis
         /// <summary>
         /// The maximum number of requests allowed in-flight
         /// </summary>
-        public int MaxConcurrentRequests { get; set; }
+        public int MaxConcurrentRequests { get; set; } = 10;
 
         /// <summary>
         /// Delegate type to handle unhandled exceptions
@@ -32,7 +33,7 @@ namespace chrysalis
         /// </summary>
         /// <param name="context">The HTTP context object</param>
         /// <param name="request">The request object</param>
-        public delegate void RequestHandler(HttpListenerContext context, HttpListenerRequest request);
+        public delegate Task RequestHandler(HttpListenerContext context, HttpListenerRequest request);
 
         private readonly HttpListener _httpListener;
         private readonly CancellationTokenSource _tokenSource = new CancellationTokenSource();
@@ -40,7 +41,8 @@ namespace chrysalis
         /// <summary>
         /// Collection of handlers based on [HTTP_METHOD, PATH]
         /// </summary>
-        private Dictionary<Tuple<string, string>, RequestHandler> _handlers = new Dictionary<Tuple<string, string>, RequestHandler>(); 
+        private Dictionary<Tuple<string, string>, RequestHandler> _handlers 
+            = new Dictionary<Tuple<string, string>, RequestHandler>(); 
 
         /// <summary>
         /// Constructs a new HttpFrontend
@@ -58,7 +60,7 @@ namespace chrysalis
         /// <summary>
         /// Starts HTTP services
         /// </summary>
-        public async void Start()
+        public async Task Start()
         {
             _httpListener.Start();
 
@@ -85,8 +87,7 @@ namespace chrysalis
                     {
                         OnUnhandledException?.Invoke(t.Exception);
                     }
-                }
-                
+                }   
             }
         }
 
@@ -95,9 +96,28 @@ namespace chrysalis
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        private async Task ProcessRequestAsync(HttpListenerContext context)
+        private async Task<bool> ProcessRequestAsync(HttpListenerContext context)
         {
+            //combine path parts until we find a match
+            StringBuilder sb = new StringBuilder();
 
+            foreach (var segment in context.Request.Url.Segments)
+            {
+                sb.Append("/");
+                sb.Append(segment);
+
+                RequestHandler handler;
+                var search = new Tuple<string, string>(context.Request.HttpMethod, sb.ToString());
+                if (_handlers.TryGetValue(search, out handler))
+                {
+                    //we found a matching handler. call it
+                    await handler(context, context.Request);
+                    return true;
+                }
+            }
+
+            //we didn't find a handler
+            return false;
         }
 
         /// <summary>
