@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chrysalis", "chrysalis.csproj", "{815B6100-32CD-422C-8FAD-8CB0AE6F0E96}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{815B6100-32CD-422C-8FAD-8CB0AE6F0E96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{815B6100-32CD-422C-8FAD-8CB0AE6F0E96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{815B6100-32CD-422C-8FAD-8CB0AE6F0E96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{815B6100-32CD-422C-8FAD-8CB0AE6F0E96}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
