@@ -98,16 +98,33 @@ namespace chrysalis
         /// <returns></returns>
         private async Task ProcessRequestAsync(HttpListenerContext context)
         {
-            //remove path parts until we find a match
-            for (int i = context.Request.Url.Segments.Length; i > 0; i--)
+            if (context.Request.Url.Segments.Length == 1 && context.Request.Url.Segments[0] == "/")
             {
-                StringBuilder sb = new StringBuilder();
-                for (int segIdx = 0; segIdx < i; segIdx++)
+                //this is a special case asking for the root
+                StringBuilder sb = new StringBuilder("/");
+                if (await TryFindHandler(context, sb)) return;
+            }
+            else
+            {
+                //remove path parts until we find a match
+                for (int i = context.Request.Url.Segments.Length; i > 1; i--)
                 {
-                    sb.Append(context.Request.Url.Segments[segIdx]);
+                    StringBuilder sb = new StringBuilder();
+                    for (int segIdx = 0; segIdx < i; segIdx++)
+                    { 
+                        sb.Append(context.Request.Url.Segments[segIdx]);
+                    }
+
+                    //always end in /
+                    if (sb[sb.Length - 1] != '/')
+                    {
+                        sb.Append("/");
+                    }
+
                     if (await TryFindHandler(context, sb)) return;
                 }
             }
+            
 
             //we didn't find a handler
             context.Response.StatusCode = 404;
@@ -142,6 +159,7 @@ namespace chrysalis
         /// <param name="path">The minimal URL path that will trigger the handler</param>
         public void AddHandler(string method, string path, RequestHandler handler)
         {
+            if (!path.EndsWith("/")) path += "/";
             _handlers.Add(new Tuple<string, string>(method, path), handler);
         }
 
