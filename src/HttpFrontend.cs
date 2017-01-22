@@ -96,27 +96,34 @@ namespace chrysalis
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        private async Task<bool> ProcessRequestAsync(HttpListenerContext context)
+        private async Task ProcessRequestAsync(HttpListenerContext context)
         {
-            //combine path parts until we find a match
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var segment in context.Request.Url.Segments)
+            //remove path parts until we find a match
+            for (int i = context.Request.Url.Segments.Length; i > 0; i--)
             {
-                sb.Append("/");
-                sb.Append(segment);
-
-                RequestHandler handler;
-                var search = new Tuple<string, string>(context.Request.HttpMethod, sb.ToString());
-                if (_handlers.TryGetValue(search, out handler))
+                StringBuilder sb = new StringBuilder();
+                for (int segIdx = 0; segIdx < i; segIdx++)
                 {
-                    //we found a matching handler. call it
-                    await handler(context, context.Request);
-                    return true;
+                    sb.Append(context.Request.Url.Segments[segIdx]);
+                    if (await TryFindHandler(context, sb)) return;
                 }
             }
 
             //we didn't find a handler
+            context.Response.StatusCode = 404;
+            context.Response.Close();
+        }
+
+        private async Task<bool> TryFindHandler(HttpListenerContext context, StringBuilder sb)
+        {
+            RequestHandler handler;
+            var search = new Tuple<string, string>(context.Request.HttpMethod, sb.ToString());
+            if (_handlers.TryGetValue(search, out handler))
+            {
+                //we found a matching handler. call it
+                await handler(context, context.Request);
+                return true;
+            }
             return false;
         }
 
@@ -126,6 +133,16 @@ namespace chrysalis
         public void Stop()
         {
             _tokenSource.Cancel();
+        }
+
+        /// <summary>
+        /// Adds a new HTTP handler
+        /// </summary>
+        /// <param name="method">The HTTP method</param>
+        /// <param name="path">The minimal URL path that will trigger the handler</param>
+        public void AddHandler(string method, string path, RequestHandler handler)
+        {
+            _handlers.Add(new Tuple<string, string>(method, path), handler);
         }
 
     }
