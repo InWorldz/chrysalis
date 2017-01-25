@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace chrysalis
+namespace InWorldz.Chrysalis
 {
     /// <summary>
     /// Frontend to a simple HTTP server
     /// </summary>
-    class HttpFrontend
+    internal class HttpFrontend
     {
         /// <summary>
         /// The maximum number of requests allowed in-flight
@@ -41,7 +41,7 @@ namespace chrysalis
         /// <summary>
         /// Collection of handlers based on [HTTP_METHOD, PATH]
         /// </summary>
-        private Dictionary<Tuple<string, string>, RequestHandler> _handlers 
+        private readonly Dictionary<Tuple<string, string>, RequestHandler> _handlers 
             = new Dictionary<Tuple<string, string>, RequestHandler>(); 
 
         /// <summary>
@@ -157,6 +157,7 @@ namespace chrysalis
         /// </summary>
         /// <param name="method">The HTTP method</param>
         /// <param name="path">The minimal URL path that will trigger the handler</param>
+        /// <param name="handler">The handler to process the request</param>
         public void AddHandler(string method, string path, RequestHandler handler)
         {
             if (!path.EndsWith("/")) path += "/";

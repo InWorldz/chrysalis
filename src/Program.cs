@@ -1,18 +1,15 @@
 ﻿using System.Threading.Tasks;
+using InWorldz.Chrysalis.Controllers;
 
-namespace chrysalis
+namespace InWorldz.Chrysalis
 {
     class Program
     {
         static void Main(string[] args)
         {
-            HttpFrontend htf = new HttpFrontend(new[] {"http://localhost:9200/"});
-            htf.AddHandler("GET", "/", (context, request) =>
-            {
-                context.Response.Redirect("http://www.google.com");
-                context.Response.Close();
-                return Task.FromResult(0);
-            });
+            var htf = new HttpFrontend(new[] {"http://localhost:9200/"});
+            var geometryController = new GeometryController(htf);
+
 
             htf.Start().Wait();
         }

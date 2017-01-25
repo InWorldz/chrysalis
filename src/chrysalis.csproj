@@ -7,8 +7,8 @@
     <ProjectGuid>{815B6100-32CD-422C-8FAD-8CB0AE6F0E96}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>chrysalis</RootNamespace>
-    <AssemblyName>chrysalis</AssemblyName>
+    <RootNamespace>InWorldz.Chrysalis</RootNamespace>
+    <AssemblyName>InWorldz.Chrysalis</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,13 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\GeometryController.cs" />
     <Compile Include="HttpFrontend.cs" />
+    <Compile Include="Processors\GeometryProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
