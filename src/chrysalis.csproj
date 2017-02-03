@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FlatBuffers">
+      <HintPath>..\..\halcyon\bin\FlatBuffers.dll</HintPath>
+    </Reference>
+    <Reference Include="InWorldz.Arbiter">
+      <HintPath>..\..\halcyon\bin\InWorldz.Arbiter.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,6 +54,7 @@
     <Compile Include="Processors\GeometryProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\StreamUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
