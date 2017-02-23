@@ -13,10 +13,22 @@ namespace InWorldz.Chrysalis.Controllers
     {
         public GeometryController(HttpFrontend frontEnd)
         {
-            frontEnd.AddHandler("POST", "/geometry/h2b", ConvertHalcyonGeomToBabylon);
+            frontEnd.AddHandler("POST", "/geometry/hp2b", ConvertHalcyonPrimToBabylon);
+            frontEnd.AddHandler("POST", "/geometry/hg2b", ConvertHalcyonGroupToBabylon);
         }
 
-        private async Task ConvertHalcyonGeomToBabylon(HttpListenerContext context, HttpListenerRequest request)
+        private async Task ConvertHalcyonPrimToBabylon(HttpListenerContext context, HttpListenerRequest request)
+        {
+            //halcyon gemoetry is coming in as a primitive flatbuffer object
+            //as binary in the body. deserialize and convert using the prim exporter
+            ByteBuffer body = await StreamUtil.ReadStreamFullyAsync(request.InputStream);
+            var prim = HalcyonPrimitive.GetRootAsHalcyonPrimitive(body);
+            
+
+
+        }
+
+        private async Task ConvertHalcyonGroupToBabylon(HttpListenerContext context, HttpListenerRequest request)
         {
             //halcyon gemoetry is coming in as a primitive flatbuffer object
             //as binary in the body. deserialize and convert using the prim exporter
