@@ -23,17 +23,17 @@ namespace InWorldz.Chrysalis.Controllers
             //as binary in the body. deserialize and convert using the prim exporter
             ByteBuffer body = await StreamUtil.ReadStreamFullyAsync(request.InputStream);
             var prim = HalcyonPrimitive.GetRootAsHalcyonPrimitive(body);
-            
+            var part = Mapper.MapFlatbufferPrimToPart(prim);
 
 
         }
 
         private async Task ConvertHalcyonGroupToBabylon(HttpListenerContext context, HttpListenerRequest request)
         {
-            //halcyon gemoetry is coming in as a primitive flatbuffer object
+            //halcyon gemoetry is coming in as a primitive group flatbuffer object
             //as binary in the body. deserialize and convert using the prim exporter
             ByteBuffer body = await StreamUtil.ReadStreamFullyAsync(request.InputStream);
-            var prim = HalcyonPrimitive.GetRootAsHalcyonPrimitive(body);
+            var group = HalcyonGroup.GetRootAsHalcyonGroup(body);
 
 
         }

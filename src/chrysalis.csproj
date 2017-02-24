@@ -39,6 +39,17 @@
     <Reference Include="InWorldz.Arbiter">
       <HintPath>..\..\halcyon\bin\InWorldz.Arbiter.dll</HintPath>
     </Reference>
+    <Reference Include="InWorldz.PrimExporter.ExpLib">
+      <HintPath>..\..\prim-exporter\InWorldz.PrimExporter\InWorldz.PrimExporter.ExpLib\bin\Debug\InWorldz.PrimExporter.ExpLib.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSim.Framework, Version=0.6.5.23245, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\halcyon\bin\OpenSim.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSim.Region.Framework, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\halcyon\bin\OpenSim.Region.Framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
