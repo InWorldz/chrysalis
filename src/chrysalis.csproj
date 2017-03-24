@@ -42,6 +42,14 @@
     <Reference Include="InWorldz.PrimExporter.ExpLib">
       <HintPath>..\..\prim-exporter\InWorldz.PrimExporter\InWorldz.PrimExporter.ExpLib\bin\Debug\InWorldz.PrimExporter.ExpLib.dll</HintPath>
     </Reference>
+    <Reference Include="OpenMetaverseTypes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\halcyon\bin\OpenMetaverseTypes.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSim.Data, Version=0.6.5.23245, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\halcyon\bin\OpenSim.Data.dll</HintPath>
+    </Reference>
     <Reference Include="OpenSim.Framework, Version=0.6.5.23245, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\halcyon\bin\OpenSim.Framework.dll</HintPath>

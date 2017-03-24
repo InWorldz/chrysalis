@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using FlatBuffers;
 using InWorldz.Arbiter.Serialization;
 using InWorldz.Chrysalis.Util;
+using InWorldz.PrimExporter.ExpLib;
+using InWorldz.PrimExporter.ExpLib.ImportExport;
+using OpenMetaverse;
 
 namespace InWorldz.Chrysalis.Controllers
 {
@@ -25,7 +28,7 @@ namespace InWorldz.Chrysalis.Controllers
             var prim = HalcyonPrimitive.GetRootAsHalcyonPrimitive(body);
             var part = Mapper.MapFlatbufferPrimToPart(prim);
 
-
+            
         }
 
         private async Task ConvertHalcyonGroupToBabylon(HttpListenerContext context, HttpListenerRequest request)
@@ -33,9 +36,24 @@ namespace InWorldz.Chrysalis.Controllers
             //halcyon gemoetry is coming in as a primitive group flatbuffer object
             //as binary in the body. deserialize and convert using the prim exporter
             ByteBuffer body = await StreamUtil.ReadStreamFullyAsync(request.InputStream);
+
             var group = HalcyonGroup.GetRootAsHalcyonGroup(body);
+            var sog = Mapper.MapFlatbufferGroupToSceneObjectGroup(group);
 
+            var displayData = GroupLoader.Instance.GroupDisplayDataFromSOG(UUID.Zero, new GroupLoader.LoaderParams(),
+                sog, null, null, null);
 
+            BabylonFlatbufferFormatter formatter = new BabylonFlatbufferFormatter();
+
+            var babylonFlatbuffer = formatter.Export(displayData).FaceBlob;
+
+            context.Response.StatusCode = 200;
+            context.Response.AddHeader("Content-Type", "application/octet-stream");
+
+            await context.Response.OutputStream.WriteAsync(babylonFlatbuffer.Item1, babylonFlatbuffer.Item2,
+                babylonFlatbuffer.Item3);
+
+            context.Response.Close();
         }
     }
 }
