@@ -45,10 +45,21 @@ namespace InWorldz.Chrysalis.Controllers
 
             BabylonFlatbufferFormatter formatter = new BabylonFlatbufferFormatter();
 
-            var babylonFlatbuffer = formatter.Export(displayData).FaceBlob;
+            var babylonExport = formatter.Export(displayData);
+            var babylonFlatbuffer = babylonExport.FaceBlob;
+
+            ObjectHasher hasher = new ObjectHasher();
+
+            //compute the hash for the group to generate the etag
+            ulong hash = 5381;
+            foreach (var obj in babylonExport.BaseObjects)
+            {
+                hash = hasher.GetPrimHash(obj.MaterialHash, obj.ShapeHash);
+            }
 
             context.Response.StatusCode = 200;
             context.Response.AddHeader("Content-Type", "application/octet-stream");
+            context.Response.AddHeader("Etag", hash.ToString());
 
             await context.Response.OutputStream.WriteAsync(babylonFlatbuffer.Item1, babylonFlatbuffer.Item2,
                 babylonFlatbuffer.Item3);
