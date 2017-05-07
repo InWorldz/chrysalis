@@ -102,7 +102,7 @@ namespace InWorldz.Chrysalis
             {
                 //this is a special case asking for the root
                 StringBuilder sb = new StringBuilder("/");
-                if (await TryFindHandler(context, sb)) return;
+                if (await TryExecuteHandler(context, sb)) return;
             }
             else
             {
@@ -121,7 +121,7 @@ namespace InWorldz.Chrysalis
                         sb.Append("/");
                     }
 
-                    if (await TryFindHandler(context, sb)) return;
+                    if (await TryExecuteHandler(context, sb)) return;
                 }
             }
             
@@ -131,7 +131,7 @@ namespace InWorldz.Chrysalis
             context.Response.Close();
         }
 
-        private async Task<bool> TryFindHandler(HttpListenerContext context, StringBuilder sb)
+        private async Task<bool> TryExecuteHandler(HttpListenerContext context, StringBuilder sb)
         {
             RequestHandler handler;
             var search = new Tuple<string, string>(context.Request.HttpMethod, sb.ToString());
