@@ -40,11 +40,10 @@
       <HintPath>..\..\halcyon\bin\InWorldz.Arbiter.dll</HintPath>
     </Reference>
     <Reference Include="InWorldz.PrimExporter.ExpLib">
-      <HintPath>..\..\prim-exporter\InWorldz.PrimExporter\InWorldz.PrimExporter.ExpLib\bin\Debug\InWorldz.PrimExporter.ExpLib.dll</HintPath>
+      <HintPath>..\..\prim-exporter\InWorldz.PrimExporter\InWorldz.PrimExporter.ExpLib\bin\x64\Debug\InWorldz.PrimExporter.ExpLib.dll</HintPath>
     </Reference>
-    <Reference Include="OpenMetaverseTypes, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\halcyon\bin\OpenMetaverseTypes.dll</HintPath>
+    <Reference Include="LibreMetaverse.Types">
+      <HintPath>..\..\halcyon\bin\LibreMetaverse.Types.dll</HintPath>
     </Reference>
     <Reference Include="OpenSim.Data, Version=0.6.5.23245, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
