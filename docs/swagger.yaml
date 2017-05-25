@@ -75,3 +75,53 @@ paths:
           default:
             description: "Error response"
         x-swagger-router-controller: "Geometry"
+
+  /geometry/grouphash:
+      get:
+        tags:
+        - "Geometry"
+        summary: "Hashes halcyon group for instancing"
+        operationId: "GetHalcyonGroupHash"
+        produces: 
+        - "text/plain"
+        parameters:
+        - in: "body"
+          name: "group"
+          required: true
+          "schema": {
+            "type": "string",
+            "format": "byte"
+          }
+        responses:
+          200:
+            description: "Successful response"
+            examples:
+              text/plain: "4t34f5r4tr34"
+          default:
+            description: "Error response"
+        x-swagger-router-controller: "Geometry"
+
+  /geometry/primhash:
+      get:
+        tags:
+        - "Geometry"
+        summary: "Hashes halcyon prim for instancing"
+        operationId: "GetHalcyonPrimHash"
+        produces: 
+        - "text/plain"
+        parameters:
+        - in: "body"
+          name: "group"
+          required: true
+          "schema": {
+            "type": "string",
+            "format": "byte"
+          }
+        responses:
+          200:
+            description: "Successful response"
+            examples:
+              text/plain: "4t34f5r4tr34"
+          default:
+            description: "Error response"
+        x-swagger-router-controller: "Geometry" 
